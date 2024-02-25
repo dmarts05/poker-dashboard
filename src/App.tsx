@@ -1,14 +1,19 @@
-import { useDeckStore } from "./stores/deck.store";
+import { useEffect, useState } from "react";
+import { Card, generateDeck } from "./lib/deck";
 
 function App() {
-  const { cards } = useDeckStore();
+  const [deck, setDeck] = useState<Card[]>([]);
+
+  useEffect(() => {
+    setDeck(generateDeck());
+  }, []);
 
   return (
-    <div className="flex flex-col gap-8 h-full p-8 justify-center items-center">
+    <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
       <h1 className="text-5xl font-bold text-center">Deck of Cards</h1>
       <main>
-        <section className="grid justify-center items-center gap-4 grid-cols-13">
-          {cards.map((card) => (
+        <section className="grid items-center justify-center gap-4 grid-cols-13">
+          {deck.map((card) => (
             <img
               key={`${card.suit}-${card.rank}`}
               src={card.imgUrl}
